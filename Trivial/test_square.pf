@@ -1,3 +1,4 @@
+@test
 subroutine test_square()
    use Square_mod
    use funit
