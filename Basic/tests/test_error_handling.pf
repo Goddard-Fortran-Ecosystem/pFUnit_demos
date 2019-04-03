@@ -1,0 +1,28 @@
+   ! Just as it is important to test that your code provides correct
+   ! results when given correct inputs, it is also important to test
+   ! that your code behaves as expected when given invalid inputs.
+   ! This module demonstrates how this can be done with pFUnit.
+
+
+module test_error_handling
+   use funit
+   use working_sut_mod
+   implicit none
+
+contains
+
+
+   @test
+   subroutine test_negative_factorial()
+      integer :: neg_factorial
+
+      neg_factorial = factorial(-1) ! should throw an exception
+
+      @assertExceptionRaised('Argument to factorial must be >= 0.')
+      
+   end subroutine test_negative_factorial
+
+
+end module test_error_handling
+
+   
