@@ -13,7 +13,7 @@ commands:
 ```
 % mkdir build
 % cd build
-% cmake ..
+% cmake .. -DCMAKE_PREFIX_PATH=<path-to-pfunit-install>
 % make tests
 % ctest --verbose
 ```
