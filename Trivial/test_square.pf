@@ -3,6 +3,6 @@ subroutine test_square()
    use Square_mod
    use funit
 
-   @assertEqual(9., square(3.))
+   @assertEqual(9., square(3.), 'square(3)')
    
 end subroutine test_square

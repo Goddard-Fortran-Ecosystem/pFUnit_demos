@@ -1,9 +1,14 @@
-#!/bin/bash
+#!/bin/bash -f
 
-% mkdir build
-% cd build
-% cmake .. –DCMAKE_PREFIX_PATH=$PFUNIT
-% make
-% ./my_test
-# % ctest --verbose
+if [[ -d build ]]
+then
+    rm -rf build
+fi
+
+mkdir -p build
+cd build
+cmake .. -DCMAKE_PREFIX_PATH=$PFUNIT
+make
+./my_tests
+# ctest --verbose
 
