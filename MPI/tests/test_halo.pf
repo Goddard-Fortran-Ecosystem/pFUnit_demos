@@ -1,7 +1,6 @@
 module test_halo
    use MPI
-   use pfunit
-   use funit
+   use pFUnit  ! not FUnit
    use halo_mod
    implicit none
 
@@ -129,7 +128,6 @@ contains
    subroutine test_fill_halo_north_pole(this)
       type (MpiTestMethod) :: this
 
-      integer :: comm
       integer :: rank, npes
 
       real :: array(NX_LOC,0:NY_LOC+1)
