@@ -17,3 +17,7 @@ add_pfunit_ctest (error_handling
   EXTRA_USE throw_with_pfunit_mod
   EXTRA_INITIALIZE initialize_throw
   )
+
+add_pfunit_ctest (disabled_test
+  TEST_SOURCES test_disable.pf
+  )

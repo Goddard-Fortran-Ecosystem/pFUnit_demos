@@ -1,0 +1,25 @@
+module test_disable
+
+contains
+
+   @test
+   subroutine test_1_active()
+   end subroutine test_1_active
+
+   @test
+   @disable
+   ! Disabled tests show up in the summary.
+   subroutine test_2_disabled()
+      ! does not run
+   end subroutine test_2_disabled
+
+   @test
+   subroutine test_3_active()
+   end subroutine test_3_active
+
+   !@test
+   ! Commented @test is not seen by framework at all.
+   subroutine test_4_active()
+   end subroutine test_4_active
+
+end module test_disable
