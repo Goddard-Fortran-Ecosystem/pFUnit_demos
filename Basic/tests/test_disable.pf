@@ -1,3 +1,5 @@
+! This suite demonstrates various mechanism to
+! disable/skip tests.
 module test_disable
 
 contains
@@ -21,5 +23,13 @@ contains
    ! Commented @test is not seen by framework at all.
    subroutine test_4_active()
    end subroutine test_4_active
+
+   @test(#ifdef=foo)
+   subroutine test_if_foo_defined()
+   end subroutine test_if_foo_defined
+
+   @test(#ifndef=foo)
+   subroutine test_if_not_foo_defined()
+   end subroutine test_if_not_foo_defined
 
 end module test_disable
