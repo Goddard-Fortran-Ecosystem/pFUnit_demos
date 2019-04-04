@@ -1,0 +1,179 @@
+module test_halo
+   use MPI
+   use pfunit
+   use funit
+   use halo_mod
+   implicit none
+
+   integer, parameter :: NX_LOC = 4
+   integer, parameter :: NY_LOC = 4
+   real, parameter :: HALO_UNDEF = -9999.
+
+contains
+
+   ! Note that this test is _serial_.
+   @test
+   subroutine test_get_pe_south()
+
+      ! No southern neigbor if rank=0
+      @assertEqual(MPI_PROC_NULL, get_pe_south(rank=0, npes=1))
+      @assertEqual(MPI_PROC_NULL, get_pe_south(0, 2))
+      @assertEqual(MPI_PROC_NULL, get_pe_south(0, 3))
+
+      ! Otherwise neighbor is rank-1
+      @assertEqual(0, get_pe_south(1, 2))
+      @assertEqual(0, get_pe_south(1, 3))
+
+      @assertEqual(1, get_pe_south(2, 3))
+      @assertEqual(2, get_pe_south(3, 4))
+
+   end subroutine test_get_pe_south
+
+   ! another serial test
+   @test
+   subroutine test_get_pe_north()
+      @assertEqual(MPI_PROC_NULL, get_pe_north(0, 1))
+
+      @assertEqual(MPI_PROC_NULL, get_pe_north(1, 2))
+      @assertEqual(MPI_PROC_NULL, get_pe_north(2, 3))
+
+      @assertEqual(1, get_pe_north(0, 2))
+      @assertEqual(2, get_pe_north(1, 3))
+
+      @assertEqual(2, get_pe_north(1, 3))
+      @assertEqual(3, get_pe_north(2, 4))
+
+   end subroutine test_get_pe_north
+
+
+
+   !--------------
+   ! Our first parallel test: note the "this" dummy argument.
+   !
+   ! Intent: fill_halo() should not change any values in the interior
+   ! of a subdomain
+   !--------------
+   @test(npes=[1,2,3,4])
+   subroutine test_fill_halo_interior(this)
+      type (MpiTestMethod), intent(inout) :: this
+
+      real :: array(NX_LOC,0:NY_LOC+1) ! local domain with halo region
+      real :: interior_value
+
+      ! Preconditions: Initialize array with known values for the
+      ! interior and the halo regions.
+      array(1:NX_LOC,0) = HALO_UNDEF
+      array(1:NX_LOC,NY_LOC + 1) = HALO_UNDEF
+
+      interior_value = this%getProcessRank()
+      array(1:NX_LOC,1:NY_LOC) = interior_value
+
+      ! Invoke SUT
+      call fill_halo(array, this%getMpiCommunicator())
+
+      ! check that interior values are unchanged
+      @MPIassertEqual(interior_value, array(1:NX_LOC,1:NY_LOC))
+
+   end subroutine test_fill_halo_interior
+
+
+
+   @test(npes=[1,2,3])
+   subroutine test_fill_halo_south_pole(this)
+      type (MpiTestMethod) :: this
+
+      integer :: rank
+      real :: array(NX_LOC,0:NY_LOC+1)
+
+      real, parameter :: INTERIOR_VALUE = 1.
+
+      ! Initialize array with known values for 
+      ! the interior and the halo regions.
+      array(1:NX_LOC,0) = HALO_UNDEF
+      array(1:NX_LOC,NY_LOC + 1) = HALO_UNDEF
+      array(1:NX_LOC,1:NY_LOC) = INTERIOR_VALUE
+
+      call fill_halo(array, this%getMpiCommunicator())
+
+      rank = this%getProcessRank()
+      if (rank == 0) then ! southern halo
+         @assertEqual(HALO_UNDEF, array(1:NX_LOC,0)) 
+      end if
+   end subroutine test_fill_halo_south_pole
+
+
+   @test(npes=[1,2,3])
+   subroutine test_fill_halo_south_other(this)
+      type (MpiTestMethod) :: this
+
+      integer :: rank
+      real :: array(NX_LOC,0:NY_LOC+1)
+
+      rank = this%getProcessRank()
+
+      ! Initialize array with known values for 
+      ! the interior and the halo regions.
+      array(1:NX_LOC,0) = HALO_UNDEF
+      array(1:NX_LOC,NY_LOC + 1) = HALO_UNDEF
+      array(1:NX_LOC,1:NY_LOC) = rank
+
+      call fill_halo(array, this%getMpiCommunicator())
+
+      if (rank > 0) then ! southern halo
+         @assertEqual(rank - 1, array(1:NX_LOC,0)) 
+      end if
+
+   end subroutine test_fill_halo_south_other
+
+   @test(npes=[1,2,3])
+   subroutine test_fill_halo_north_pole(this)
+      type (MpiTestMethod) :: this
+
+      integer :: comm
+      integer :: rank, npes
+
+      real :: array(NX_LOC,0:NY_LOC+1)
+
+      real, parameter :: INTERIOR_VALUE = 1.
+
+      ! Initialize array with known values for 
+      ! the interior and the halo regions.
+      array(1:NX_LOC,0) = HALO_UNDEF
+      array(1:NX_LOC,NY_LOC + 1) = HALO_UNDEF
+      array(1:NX_LOC,1:NY_LOC) = INTERIOR_VALUE
+
+      call fill_halo(array, this%getMpiCommunicator())
+
+      rank = this%getProcessRank()
+      npes = this%getNumProcesses()
+      if (rank == npes-1) then ! northern halo
+         @assertEqual(HALO_UNDEF, array(1:NX_LOC,NY_LOC+1)) 
+      end if
+
+   end subroutine test_fill_halo_north_pole
+
+   @test(npes=[1,2,3])
+   subroutine test_fill_halo_north_other(this)
+      type (MpiTestMethod) :: this
+
+      integer :: rank, npes
+      real :: array(NX_LOC,0:NY_LOC+1)
+
+      rank = this%getProcessRank()
+      npes = this%getNumProcesses()
+
+      ! Initialize array with known values for 
+      ! the interior and the halo regions.
+      array(1:NX_LOC,0) = HALO_UNDEF
+      array(1:NX_LOC,NY_LOC + 1) = HALO_UNDEF
+      array(1:NX_LOC,1:NY_LOC) = rank
+
+      call fill_halo(array, this%getMpiCommunicator())
+
+      if (rank < npes-1) then ! northern halo
+         @assertEqual(rank + 1, array(1:NX_LOC,NY_LOC+1)) 
+      end if
+
+   end subroutine test_fill_halo_north_other
+
+end module test_halo

@@ -1,10 +1,11 @@
 cmake_minimum_required(VERSION 3.12)
 
-project (PFUNIT_DEMO_BASIC
+project (PFUNIT_DEMO_MPI
   VERSION 1.0.0
   LANGUAGES Fortran)
 
 find_package(PFUNIT REQUIRED)
+find_package(MPI REQUIRED)
 enable_testing()
 
 add_subdirectory(src)
