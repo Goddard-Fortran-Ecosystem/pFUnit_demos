@@ -7,17 +7,12 @@ This repository contains a sequence of small self-contained examples
 that demonstrate how to use pFUnit.  Most are intended to be built
 with cmake and all assume that you already have installed pFUnit.
 
-Generally within each directory, one can build with this sequence of
-commands:
+Generally within each directory, one can build and execute the demo
+by executing
 
-```
-% mkdir build
-% cd build
-% cmake .. -DCMAKE_PREFIX_PATH=<path-to-pfunit-install>
-% make tests
-% ctest --verbose
-```
+	./build_and_run.x
 
+from the command line.   
 
 
 ## Examples:
@@ -33,24 +28,25 @@ commands:
 
 ### Basic
 
-      This demo uses a variety of basic pFUnit assertions.
+      This demo uses a variety of pFUnit features to illustrate basic
+      capabilities.
 
-
-### Fixtures
-
-      This demo is a bit more complex and uses test "fixtures" with setUp() and tearDown().  Fixtures
-      allow repeated initialization logic across tests in a suite and can help with releasing resources for
-      failed tests.
 
 ### Parameterized
 
-      This demo is relies on some advanced pFUnit capabilities to extend TestCase
+      This demo is relies on some advanced pFUnit capabilities to
+      demonstrate somewhat realistic parameterized test cases.
       
 
 ### MPI
 
       This demo uses pFUnit's parallel capabilities and includes some
       advanced cases with fixtures and parameterized tests.
+
+### fHamcrest
+
+      New and exciting way to write assertions.  More extensible and
+      provides better error messages for complex combinations.
 
 
 ### GNUmake
