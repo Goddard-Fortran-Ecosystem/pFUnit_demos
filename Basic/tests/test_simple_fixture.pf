@@ -11,7 +11,7 @@
 ! guarantees the file is deleted even when tests fail.
 
 
-module test_pseudo_fixture
+module test_simple_fixture
    use funit
    use working_sut_mod
 
@@ -67,7 +67,7 @@ contains
 
 
 
-end module test_pseudo_fixture
+end module test_simple_fixture
 
 
    
