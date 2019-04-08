@@ -85,7 +85,7 @@ contains
          use_name = base_name
       end if
 
-      write(ERROR_UNIT,'(a,i5.5,1x,a,i5.5,1x,a3,a40,1x,a)') &
+      write(ERROR_UNIT,'(a,i5.5,1x,1x,a3,a80,1x,a)') &
            & 'FAIL at line=', line, prefix, use_name, &
            & '<'//adjustl(trim(message))//'>'
 

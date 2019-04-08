@@ -17,8 +17,6 @@ endif
 include $(PFUNIT_DIR)/PFUNIT-4.0/include/PFUNIT.mk
 
 FFLAGS += $(PFUNIT_EXTRA_FFLAGS)
-ttt:=andaoneandatwo
-export ttt
 
 test_square.o: square.mod
 square.mod: square.o
