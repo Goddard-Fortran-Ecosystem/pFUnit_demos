@@ -55,24 +55,20 @@ contains
    @test(npes=[1,2,3,4])
    subroutine test_fill_halo_interior(this)
       type (MpiTestMethod), intent(inout) :: this
-
       real :: array(NX_LOC,0:NY_LOC+1) ! local domain with halo region
       real :: interior_value
 
-      ! Preconditions: Initialize array with known values for the
-      ! interior and the halo regions.
-      array(1:NX_LOC,0) = HALO_UNDEF
-      array(1:NX_LOC,NY_LOC + 1) = HALO_UNDEF
-
+      ! Preconditions: Initialize interior and halos
       interior_value = this%getProcessRank()
       array(1:NX_LOC,1:NY_LOC) = interior_value
+      array(1:NX_LOC,0) = HALO_UNDEF
+      array(1:NX_LOC,NY_LOC + 1) = HALO_UNDEF
 
       ! Invoke SUT
       call fill_halo(array, this%getMpiCommunicator())
 
       ! check that interior values are unchanged
       @MPIassertEqual(interior_value, array(1:NX_LOC,1:NY_LOC))
-
    end subroutine test_fill_halo_interior
 
 
