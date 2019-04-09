@@ -1,6 +1,6 @@
 
 add_pfunit_ctest (my_tests
-  TEST_SOURCES test_simple.pf test_pseudo_fixture.pf
+  TEST_SOURCES test_simple.pf test_simple_fixture.pf
   LINK_LIBRARIES sut
   )
 

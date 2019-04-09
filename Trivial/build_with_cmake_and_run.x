@@ -7,8 +7,10 @@ fi
 
 mkdir -p build
 cd build
-cmake .. -DCMAKE_PREFIX_PATH=$PFUNIT
+cmake .. -DCMAKE_PREFIX_PATH=$PFUNIT_DIR
 make
 ./my_tests
+
+# or
 # ctest --verbose
 
