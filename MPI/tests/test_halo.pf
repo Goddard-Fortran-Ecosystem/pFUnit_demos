@@ -112,7 +112,7 @@ contains
       call fill_halo(array, this%getMpiCommunicator())
 
       rank = this%getProcessRank()
-
+      if (rank > 0) then ! southern halo
          @assertEqual(rank - 1, array(1:NX_LOC,0)) 
       end if
 
