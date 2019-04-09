@@ -104,17 +104,15 @@ contains
       integer :: rank
       real :: array(NX_LOC,0:NY_LOC+1)
 
-      rank = this%getProcessRank()
-
-      ! Initialize array with known values for 
-      ! the interior and the halo regions.
+      ! Preconditions
       array(1:NX_LOC,0) = HALO_UNDEF
       array(1:NX_LOC,NY_LOC + 1) = HALO_UNDEF
       array(1:NX_LOC,1:NY_LOC) = rank
 
       call fill_halo(array, this%getMpiCommunicator())
 
-      if (rank > 0) then ! southern halo
+      rank = this%getProcessRank()
+
          @assertEqual(rank - 1, array(1:NX_LOC,0)) 
       end if
 
