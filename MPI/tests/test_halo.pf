@@ -79,11 +79,9 @@ contains
 
       integer :: rank
       real :: array(NX_LOC,0:NY_LOC+1)
-
       real, parameter :: INTERIOR_VALUE = 1.
 
-      ! Initialize array with known values for 
-      ! the interior and the halo regions.
+      ! Preconditions
       array(1:NX_LOC,0) = HALO_UNDEF
       array(1:NX_LOC,NY_LOC + 1) = HALO_UNDEF
       array(1:NX_LOC,1:NY_LOC) = INTERIOR_VALUE
