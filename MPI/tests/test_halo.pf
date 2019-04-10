@@ -54,7 +54,7 @@ contains
    !--------------
    @test(npes=[1,2,3,4])
    subroutine test_fill_halo_interior(this)
-      type (MpiTestMethod), intent(inout) :: this
+      class (MpiTestMethod), intent(inout) :: this
       real :: array(NX_LOC,0:NY_LOC+1) ! local domain with halo region
       real :: interior_value
 
@@ -75,7 +75,7 @@ contains
 
    @test(npes=[1,2,3])
    subroutine test_fill_halo_south_pole(this)
-      type (MpiTestMethod) :: this
+      class (MpiTestMethod), intent(inout) :: this
 
       integer :: rank
       real :: array(NX_LOC,0:NY_LOC+1)
@@ -97,7 +97,7 @@ contains
 
    @test(npes=[1,2,3])
    subroutine test_fill_halo_south_other(this)
-      type (MpiTestMethod) :: this
+      class (MpiTestMethod), intent(inout) :: this
 
       integer :: rank
       real :: array(NX_LOC,0:NY_LOC+1)
@@ -118,7 +118,7 @@ contains
 
    @test(npes=[1,2,3])
    subroutine test_fill_halo_north_pole(this)
-      type (MpiTestMethod) :: this
+      class (MpiTestMethod), intent(inout) :: this
 
       integer :: rank, npes
 
@@ -144,7 +144,7 @@ contains
 
    @test(npes=[1,2,3])
    subroutine test_fill_halo_north_other(this)
-      type (MpiTestMethod) :: this
+      class (MpiTestMethod), intent(inout) :: this
 
       integer :: rank, npes
       real :: array(NX_LOC,0:NY_LOC+1)
