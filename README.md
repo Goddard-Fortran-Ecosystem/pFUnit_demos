@@ -14,11 +14,11 @@ with cmake and all assume that you already have installed pFUnit.
 Generally within each directory, one can build and execute the demo
 by executing either
 
-	./cmake_build_and_run.x
+	./build_with_cmake_and_run.x
 
 or
 
-        ./unix_make_build_and_run.x
+        ./build_with_make_and_run.x
 	
 from the command line.
 
