@@ -11,8 +11,13 @@ This repository contains a sequence of small self-contained examples
 that demonstrate how to use pFUnit.  Most are intended to be built
 with cmake and all assume that you already have installed pFUnit.
 
-Generally within each directory, one can build and execute the demo
-by executing either
+
+First, set PFUNIT_DIR environment variable to the path where pFUnit
+was installed.
+
+
+Then, within each directory, one can build and execute the demo by
+executing either
 
 	./build_with_cmake_and_run.x
 
@@ -41,18 +46,21 @@ from the command line.
       capabilities.
 
 
-### Parameterized
-
-      This demo is relies on some advanced pFUnit capabilities to
-      demonstrate somewhat realistic parameterized test cases.
-      
-
 ### MPI
 
       This demo uses pFUnit's parallel capabilities and includes some
       advanced cases with fixtures and parameterized tests.
 
-### fHamcrest
+
+
+
+### Parameterized  (unimplemented)
+
+      This demo is relies on some advanced pFUnit capabilities to
+      demonstrate somewhat realistic parameterized test cases.
+      
+
+### fHamcrest (unimplemented)
 
       New and exciting way to write assertions.  More extensible and
       provides better error messages for complex combinations.
