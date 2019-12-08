@@ -21,7 +21,8 @@ contains
 
       if (n < 0) then
          n_factorial = -1
-         call throw_exception(__FILE__, __LINE__, message='Argument to factorial must be >= 0.')
+         call throw_exception(__FILE__, &
+              & __LINE__, message='Argument to factorial must be >= 0.')
          return
       end if
 
