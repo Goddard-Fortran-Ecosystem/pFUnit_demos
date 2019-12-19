@@ -7,7 +7,7 @@ libsut.a: $(OBJS)
 	$(AR) -r $@ $?
 
 %.o : %.F90
-	$(MPIF90) -c $(FFLAGS) $<
+	$(FC) -c $(FFLAGS) $<
 
 clean:
 	$(RM) *.o *.mod *.a

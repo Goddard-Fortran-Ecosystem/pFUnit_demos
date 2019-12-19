@@ -1,4 +1,5 @@
-include $(PFUNIT_DIR)/PFUNIT-4.0/include/PFUNIT.mk
+LATEST_PFUNIT_DIR := $(lastword $(shell echo $(wildcard $(PFUNIT_DIR)/PFUNIT-4.*) | xargs -n1 | sort -V))
+include $(LATEST_PFUNIT_DIR)/include/PFUNIT.mk
 
 all: test_simple broken_tests error_handling disabled_test
 

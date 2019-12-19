@@ -3,3 +3,5 @@
 *.a
 *.mod
 
+/Trivial/my_tests.inc
+/Trivial/test_square.F90

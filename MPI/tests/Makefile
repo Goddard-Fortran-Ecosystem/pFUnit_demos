@@ -1,5 +1,6 @@
 USEMPI=YES
-include $(PFUNIT_DIR)/PFUNIT-4.0/include/PFUNIT.mk
+LATEST_PFUNIT_DIR := $(lastword $(shell echo $(wildcard $(PFUNIT_DIR)/PFUNIT-4.*) | xargs -n1 | sort -V))
+include $(LATEST_PFUNIT_DIR)/include/PFUNIT.mk
 
 all: test_halo
 
@@ -17,4 +18,5 @@ $(eval $(call make_pfunit_test,test_halo))
 clean:
 	$(RM) *.o *.mod *.a  *.inc
 	$(RM) test_halo.F90
+	$(RM) test_halo
 

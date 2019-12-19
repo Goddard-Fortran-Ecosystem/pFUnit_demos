@@ -2,3 +2,10 @@
 /disabled_test
 /error_handling
 /test_simple
+broken_tests.inc
+disabled_test.inc
+error_handling.inc
+test_disable.F90
+test_error_handling.F90
+test_failing.F90
+test_simple.inc
