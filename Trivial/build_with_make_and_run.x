@@ -1,9 +1,6 @@
 #!/bin/bash -f
 
-if [[ -d build ]]
-then
-    rm -rf build
-fi
+make clean
 
 make all
 ./my_tests

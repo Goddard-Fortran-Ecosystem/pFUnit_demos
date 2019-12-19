@@ -1,11 +1,13 @@
+USEMPI=YES
 ifeq (nagfor,$(findstring nagfor,$(FC)))
   FFLAGS += -fpp
 endif
-export FFLAGS
 
-include $(PFUNIT_DIR)/PFUNIT-4.0/include/PFUNIT.mk
+LATEST_PFUNIT_DIR := $(lastword $(shell echo $(wildcard $(PFUNIT_DIR)/PFUNIT-4.*) | xargs -n1 | sort -V))
+include $(LATEST_PFUNIT_DIR)/include/PFUNIT.mk
 
 FFLAGS += $(PFUNIT_EXTRA_FFLAGS)
+export FFLAGS
 
 all:
 	$(MAKE) -C src all
