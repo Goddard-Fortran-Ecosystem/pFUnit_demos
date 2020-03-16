@@ -9,8 +9,8 @@ all: test_simple broken_tests error_handling disabled_test
 FFLAGS += $(PFUNIT_EXTRA_FFLAGS)
 FFLAGS += -I../src
 
-my_tests_TESTS := test_simple.pf test_simple_fixture.pf
-my_tests_OTHER_LIBRARIES := -L../src -lsut
+test_simple_TESTS := test_simple.pf test_simple_fixture.pf
+test_simple_OTHER_LIBRARIES := -L../src -lsut
 $(eval $(call make_pfunit_test,test_simple))
 
 
