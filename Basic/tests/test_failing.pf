@@ -30,9 +30,6 @@ contains
    @test
    subroutine test_fail_array()
 
-      real :: x(3)
-      real :: y(3)
-      y = square(x)
       @assertEqual([1,4,9], square([1.,2.1,3.]), tolerance=0.1, message='intentionally failing test')
    end subroutine test_fail_array
 
