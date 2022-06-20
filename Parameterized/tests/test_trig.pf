@@ -1,0 +1,87 @@
+module test_trig
+   use FUnit  ! not FUnit
+   use Trig_mod
+   implicit none
+
+   @testParameter
+   type, extends(AbstractTestParameter) :: PythagoreanTriple
+      real :: a
+      real :: b
+      real :: c
+   contains
+      procedure :: toString
+   end type PythagoreanTriple
+
+   @testCase(constructor=Test_Hypotenuse, testParameters={getParameters()})
+   type, extends(ParameterizedTestCase) :: Test_Hypotenuse
+      type(PythagoreanTriple) :: sides
+   contains
+      procedure :: setUp
+   end type Test_Hypotenuse
+
+   interface Test_Hypotenuse
+      module procedure newTest_Hypotenuse
+   end interface Test_Hypotenuse
+
+contains
+
+   ! This empty constructor is only necessary due to a bug in the
+   ! pfunit preprocessor script.
+   function newTest_Hypotenuse(testParameter) result(aTest)
+      type (Test_Hypotenuse) :: aTest
+      class (PythagoreanTriple), intent(in) :: testParameter
+   end function newTest_Hypotenuse
+
+
+   function getParameters() result(params)
+      type (PythagoreanTriple), allocatable :: params(:)
+
+      params = [ &
+           PythagoreanTriple(3., 4., 5.), &
+           PythagoreanTriple(5.,12.,13.), &
+           PythagoreanTriple(8.,15.,17.) ]
+      
+   end function getParameters
+
+   subroutine setUp(this)
+      class (Test_Hypotenuse), intent(inout) :: this
+
+      ! Have to cast the frameworks' testParamater into the subclass
+      ! used by the test.  This could be done inside each test, but it
+      ! is usually simpler to do it once in the setup.
+      select type (p => this%testParameter)
+      type is (PythagoreanTriple)
+         this%sides = p
+      end select
+   end subroutine setUp
+
+   @test
+   subroutine test_pythagorean_theorem(this)
+      class(Test_Hypotenuse), intent(inout) :: this
+
+      associate (a => this%sides%a, b => this%sides%b, c => this%sides%c )
+        @assert_that(compute_hypotenuse(a,b), is(Near(c,tolerance=0.0001)))
+      end associate
+
+   end subroutine test_pythagorean_theorem
+
+   ! This function is used by pFUnit to label failing cases.  Otherwise one cannot
+   ! easily ascertain which specific cases failed.
+   function tostring(this) result(s)
+      character(:), allocatable :: s
+      class(PythagoreanTriple), intent(in) :: this
+
+      character(20) :: buffer
+
+      write(buffer,'(f4.0)') this%a
+      s = '[  '// trim(buffer) // ', '
+      write(buffer,'(f4.0)') this%b
+      s = s  // trim(buffer) // ', '
+      write(buffer,'(f4.0)') this%c
+      s = s  // trim(buffer) // ' ]'
+   end function tostring
+      
+      
+      
+      
+end module test_trig
