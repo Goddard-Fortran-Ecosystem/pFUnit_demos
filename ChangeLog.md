@@ -1,5 +1,12 @@
 # Change Log	
 
+## [1.2.0] - 2022-06-27
+
+### Changed
+
+- Improved (clearer) code for Parameterized Test Case example.
+- Changed default compiler to `mpifort` when using `make` with the MPI example.
+
 ## [1.1.0] - 2022-06-20
 
 ### Added
