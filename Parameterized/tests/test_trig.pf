@@ -15,8 +15,6 @@ module test_trig
    @testCase(constructor=Test_Hypotenuse, testParameters={getParameters()})
    type, extends(ParameterizedTestCase) :: Test_Hypotenuse
       type(PythagoreanTriple) :: sides
-   contains
-      procedure :: setUp
    end type Test_Hypotenuse
 
    interface Test_Hypotenuse
@@ -25,11 +23,11 @@ module test_trig
 
 contains
 
-   ! This empty constructor is only necessary due to a bug in the
-   ! pfunit preprocessor script.
    function newTest_Hypotenuse(testParameter) result(aTest)
       type (Test_Hypotenuse) :: aTest
       class (PythagoreanTriple), intent(in) :: testParameter
+
+      aTest%sides = testParameter
    end function newTest_Hypotenuse
 
 
@@ -42,18 +40,6 @@ contains
            PythagoreanTriple(8.,15.,17.) ]
       
    end function getParameters
-
-   subroutine setUp(this)
-      class (Test_Hypotenuse), intent(inout) :: this
-
-      ! Have to cast the frameworks' testParamater into the subclass
-      ! used by the test.  This could be done inside each test, but it
-      ! is usually simpler to do it once in the setup.
-      select type (p => this%testParameter)
-      type is (PythagoreanTriple)
-         this%sides = p
-      end select
-   end subroutine setUp
 
    @test
    subroutine test_pythagorean_theorem(this)
