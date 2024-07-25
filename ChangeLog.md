@@ -1,5 +1,11 @@
 # Change Log	
 
+## Unreleased
+
+### Added
+
+- Added CI
+
 ## [1.2.0] - 2022-06-27
 
 ### Changed
