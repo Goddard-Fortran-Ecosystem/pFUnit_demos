@@ -51,7 +51,11 @@ from the command line.
       This demo uses pFUnit's parallel capabilities and includes some
       advanced cases with fixtures and parameterized tests.
 
+### Submodule
 
+      This demo includes pFUnit as a git submodule and builds the test suite
+      using `add_subdirectory` instead of `find_package`, such that `pFUnit`,
+      the demo library and the test suite are built from a single `CMakeLists.txt`
 
 
 ### Parameterized  (unimplemented)

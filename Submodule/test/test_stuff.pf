@@ -1,0 +1,19 @@
+module test_stuff
+use funit
+implicit none
+real, parameter :: tol = 1e-10
+contains
+
+@Test
+subroutine test_add()
+    use stuff, only: add
+
+    real :: a = 5.0
+    real :: b = 6.0
+    real :: res
+    
+    call add(a, b, res)
+    @assertEqual(res, a + b, tol)
+end subroutine test_add
+
+end module test_stuff
